@@ -1,0 +1,1 @@
+/Users/junzheng/Exercism/kotlin/pangram/src/test/kotlin/PangramTest.kt
