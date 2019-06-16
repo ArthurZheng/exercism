@@ -1,3 +1,9 @@
 .idea/
 pangram/build/*
+raindrops/build*
+raindrops/.gradle*
+raindrops/gradle/*
+raindrops/gradlew*
+raindrops/src/test/*
 ./gradle/*
+gradle/*
