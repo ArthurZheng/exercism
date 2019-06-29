@@ -103,6 +103,187 @@
 
 
 
+//import java.math.BigDecimal
+//private const val EARTH_YEAR_SECONDS = 31557600.0
+//
+//private fun Double.round2() = this.toBigDecimal().setScale(2, BigDecimal.ROUND_HALF_UP).toDouble()
+//
+//class SpaceAge(private val seconds: Long) {
+//
+//    fun onEarth(): Double = (seconds / EARTH_YEAR_SECONDS).round2()
+//    fun onMercury(): Double = convertTo(orbitalPeriodInEarthYears = 0.2408467)
+//    fun onVenus(): Double = convertTo(orbitalPeriodInEarthYears = 0.61519726)
+//    fun onMars(): Double = convertTo(orbitalPeriodInEarthYears = 1.8808158)
+//    fun onJupiter(): Double = convertTo(orbitalPeriodInEarthYears = 11.862615)
+//    fun onSaturn(): Double = convertTo(orbitalPeriodInEarthYears = 29.447498)
+//    fun onUranus(): Double = convertTo(orbitalPeriodInEarthYears = 84.016846)
+//    fun onNeptune(): Double = convertTo(orbitalPeriodInEarthYears = 164.79132)
+//
+//    private fun convertTo(orbitalPeriodInEarthYears: Double) = (seconds / EARTH_YEAR_SECONDS / orbitalPeriodInEarthYears).round2()
+//}
+//
+
+
+//import java.math.BigDecimal
+//
+//private const val EARTH_YEAR_SECONDS = 31557600.0
+//
+//private fun Double.round2() = this.toBigDecimal().setScale(2, BigDecimal.ROUND_HALF_UP).toDouble()
+//
+//private enum class Planet(val ratio: Double) {
+//    EARTH(1.0),
+//    MERCURY(0.2408467 ),
+//    VENUS(0.61519726),
+//    MARS(1.8808158),
+//    JUPITER(11.862615),
+//    SATURN(29.447498),
+//    URANUS(84.016846),
+//    NEPTUNE(164.79132)
+//}
+//
+//class SpaceAge(private val seconds: Long) {
+//    private fun toPlanetYear(planet: Planet): Double{
+//        return (seconds / planet.ratio / EARTH_YEAR_SECONDS).round2()
+//    }
+//
+//    fun onEarth() = toPlanetYear(Planet.EARTH)
+//    fun onMercury() = toPlanetYear(Planet.MERCURY)
+//    fun onVenus() = toPlanetYear(Planet.VENUS)
+//    fun onMars() = toPlanetYear(Planet.MARS)
+//    fun onJupiter() = toPlanetYear(Planet.JUPITER)
+//    fun onSaturn() = toPlanetYear(Planet.SATURN)
+//    fun onUranus() = toPlanetYear(Planet.URANUS)
+//    fun onNeptune() = toPlanetYear(Planet.NEPTUNE)
+//}
+
+
+//
+//class SpaceAge(val seconds: Long) {
+//    enum class Planet(val relPeriod: Double) {
+//        Earth(1.0),
+//        Mercury(0.2408467),
+//        Venus(0.61519726),
+//        Mars(1.8808158),
+//        Jupiter(11.862615),
+//        Saturn(29.447498),
+//        Uranus(84.016846),
+//        Neptune(164.79132);
+//
+//        fun age(seconds: Long) = (seconds / 31557600.0 / relPeriod)
+//    }
+//
+//    fun onEarth() = Planet.Earth.age(seconds).twoDecimals()
+//    fun onMercury() = Planet.Mercury.age(seconds).twoDecimals()
+//    fun onVenus() = Planet.Venus.age(seconds).twoDecimals()
+//    fun onMars() = Planet.Mars.age(seconds).twoDecimals()
+//    fun onJupiter() = Planet.Jupiter.age(seconds).twoDecimals()
+//    fun onSaturn() = Planet.Saturn.age(seconds).twoDecimals()
+//    fun onUranus() = Planet.Uranus.age(seconds).twoDecimals()
+//    fun onNeptune() = Planet.Neptune.age(seconds).twoDecimals()
+//
+//    fun Double.twoDecimals() = String.format("%.2f", this).toDouble()
+//
+//}
+//
+//
+
+class SpaceAge (private val seconds: Long){
+
+    companion object{
+        private const val EARTH_YEAR_SECONDS = 31557600.0
+    }
+
+//    private fun Double.twoDecimals() = (Math.round( this * 100.00 ) / 100.00).toDouble()
+//    private fun Double.toTwoDecimalPlaces() = Math.round(this * 100.0)/100.0
+//    private fun Double.roundUp() = BigDecimal(this).setScale(2, RoundingMode.HALF_UP).toDouble()
+//    private  fun Double.twoDecimals() = String.format("%.2f", this).toDouble()
+    private fun Double.twoDecimals() = "%.2f".format(this).toDouble()
+
+    private enum class Planet(val ratio: Double) {
+        Earth(1.0),
+        Mercury(0.2408467),
+        Venus(0.61519726),
+        Mars(1.8808158),
+        Jupiter(11.862615),
+        Saturn(29.447498),
+        Uranus(84.016846),
+        Neptune(164.79132);
+
+        fun age(seconds: Long) = (seconds / ratio / EARTH_YEAR_SECONDS).toDouble()
+    }
+
+    fun onEarth() = Planet.Earth.age(seconds = seconds).twoDecimals()
+    fun onMercury() = Planet.Mercury.age(seconds = seconds).twoDecimals()
+    fun onVenus() = Planet.Venus.age(seconds = seconds).twoDecimals()
+    fun onMars() = Planet.Mars.age(seconds = seconds).twoDecimals()
+    fun onJupiter() = Planet.Jupiter.age(seconds = seconds).twoDecimals()
+    fun onSaturn() = Planet.Saturn.age(seconds = seconds).twoDecimals()
+    fun onUranus() = Planet.Uranus.age(seconds = seconds).twoDecimals()
+    fun onNeptune() = Planet.Neptune.age(seconds = seconds).twoDecimals()
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
