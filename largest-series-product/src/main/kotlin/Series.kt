@@ -15,6 +15,39 @@ class Series(val digits: String) {
 }
 
 
+class Series(private val digitString: String) {
+    init { require(digitString.matches("\\d*".toRegex())) }
+
+    fun getLargestProduct(spanLength: Int) = when {
+        spanLength == 0 -> 1
+        spanLength > digitString.length -> throw IllegalArgumentException()
+        else -> digitString.map(Character::getNumericValue).windowed(spanLength) { it ->
+                    it.fold(1) { product, digitChar -> product * digitChar }
+                }.max() ?: 1
+    }
+}
+
+
+class Series(private val digitString: String){
+	init {
+		require(digitString.all(Char::isDigit))
+	}
+
+	fun getLargestProduct(span: Int): Int {
+		require(span <= digitString.length)
+		return when {
+			span == 0 ->1
+			digitString.isEmpty() -> 1
+			else -> maxProduct(span)
+		}
+	}
+
+	private fun maxProduct(span: Int): Int {
+		return digitString.map(Character::getNumericValue).windowed(span, 1).map{ it.fold(1, {acc, next -> next * acc})}.max() ?: 1
+	}
+}
+
+
 
 class Series(val value: String) {
     init {
@@ -28,8 +61,7 @@ class Series(val value: String) {
 }
 
 private fun List<Int>.multiply() = reduce { sum, i -> sum * i }
-
-
+private fun List<Int>.multiply() = fold(1, {acc, next -> next * acc})
 
 
 
@@ -48,6 +80,25 @@ class Series(private val digitString: String) {
 }
 
 
+class Series(private val digitString: String){
+	init { require(digitString.all(Character::isDigit)) }
+  init { require(digitString.matches("\\d*".toRegex())) }
+  init { require(digitString.matches("[0-9]".toRegex())) }
+
+
+	fun getLargestProduct(span: Int): Int {
+		return when{
+			span == 0 -> 1
+			span > digitString.length -> throw IllegalArgumentException()
+			else -> digitString.map(Character::getNumericValue).windowed(span, 1){ it.fold(1) { acc, next -> acc * next}
+			}.max() ?: 1
+		}
+	}
+}
+
+
+
+
 
 
 class Series(val str: String) {
@@ -60,12 +111,16 @@ class Series(val str: String) {
   fun getLargestProduct(len: Int): Int? {
     require(len in 0..seq.size)
 
-    return (0..(seq.size - len)).map { seq.subList(it, it + len).product() }.max()
+    return (0..(seq.size - len)).map { seq.subList(it, it + len).product() }.max()!!
   }
 
 }
 
 private fun List<Int>.product() = this.fold(1, Int::times)
+private fun List<Int>.product() = this.fold(1, { acc, next -> next * acc})
+private fun List<Int>.product() = this.reduce{acc, next -> next * acc }
+
+
 
 
 
@@ -73,11 +128,15 @@ private fun List<Int>.product() = this.fold(1, Int::times)
 
 class Series ( val digits : String ) {
   init {
-    require(digits.all{ it.isDigit() })
+//    require(digits.all{ it.isDigit() })
+    require(digits.matches("\\d*".toRegex()))
+//    require(digits.matches("[0-9]".toRegex()))
   }
 
   fun getLargestProduct( length : Int ) : Int {
-    require(length <= digits.length)
+//    require(length <= digits.length)
+    require(length in 0..digits.length)
+
     if ( length == 0 ) return 1
 
     return digits.windowed( length )
@@ -86,34 +145,13 @@ class Series ( val digits : String ) {
   }
 
   private fun product( substring : String ) : Int =
+//    substring.map{ Character.getNumericValue(it) } OR
     substring.map{ it.asDigit() }
       .reduce { x, y -> x * y }
 
 }
 
 fun Char.asDigit() : Int = this.toString().toInt()
-
-
-
-
-
-
-class Series(val series: String) {
-
-    init {
-        require(series.all(Char::isDigit))
-    }
-
-    fun getLargestProduct(n: Int): Int {
-        require(n >= 0 && n <= series.length)
-
-        return if (n == 0) 1
-        else series.map(Character::getNumericValue)
-            .windowed(n)
-            .map { it.reduce { acc, i -> acc * i } }
-            .max() ?: 1
-    }
-}
 
 
 
@@ -131,7 +169,7 @@ class Series(val input: String) {
             .map { i ->
                input.slice(i..i + span - 1)
                      .map { it.toString().toLong() }
-                     .reduce { a, b -> a * b }
+                     .fold(1, { a, b -> a * b })
             }
             .max()
             ?: 0L
@@ -144,7 +182,10 @@ class Series(val input: String) {
 
 class Series(input: String) {
     init {
-        require(input.all { it.isDigit() })
+//        require(input.all { it.isDigit() })
+//        require(input.matches(Regex("[0-9]*")))
+        require(input.matches(("[0-9]*").toRegex()))
+
     }
 
     private val arr = input.map { it.toInt() - '0'.toInt() }
@@ -180,13 +221,26 @@ class Series(private val number: String) {
 
 
 
-
-
 fun List<Int>.multiply() = this.reduce{total, i -> total * i}
+fun List<Int>.multiply() = this.fold(1, { acc, next -> next * acc })
+fun List<Int>.multiply() = this.fold(1, Int::times)
+
+
 fun Char.toDigit() = this.toString().toInt()
+fun Char.toDigit() = Character.getNumericValue(this)
+fun Char.toDigit() =  this.toInt() - '0'.toInt()
+fun Char.toDigit() =   this.toInt() - 48
+
+
 
 class Series(val input: String) {
+
     init { require(input.all {it.isDigit()}) }
+    init { require(digitString.all(Character::isDigit)) }
+    init { require(digitString.matches("\\d*".toRegex())) }
+    init { require(input.matches(Regex("[0-9]*"))) }
+    init { require(input.matches(("[0-9]*").toRegex())) }
+    init { require("[0-9]*".toRegex().matches(number)) }
 
     fun getLargestProduct(windowSize: Int): Int{
         if (windowSize == 0) return 1
@@ -201,8 +255,6 @@ class Series(val input: String) {
 
 
 
-
-
 class Series(str: String) {
     private val arr = str.map { require(Character.isDigit(it)); Character.getNumericValue(it) }
 
@@ -212,6 +264,23 @@ class Series(str: String) {
         arr.windowed(span) { it.reduce(Int::times) }.max()!!
     }
 }
+
+
+class Series(str: String) {
+    private val arr = str.map { require(Character.isDigit(it)); Character.getNumericValue(it) }
+
+    fun getLargestProduct(span: Int) = if (span == 0) 1 else {
+        require(arr.isNotEmpty()) { "digits must not be empty" }
+        require(span <= arr.size) { "span must not be larger than number of digits" }
+        arr.windowed(span) { it.multiply() }.max()!!
+    }
+
+    fun List<Int>.multiply() = this.reduce{total, i -> total * i}
+
+}
+
+
+
 
 
 
@@ -232,7 +301,7 @@ class Series(private val digits: List<Int>) {
 
 private fun Char.asInt() = toString().toInt(
 
-
+//
 
 class Series(val numberString: String) {
     fun getLargestProduct(n: Int): Int {
@@ -262,4 +331,3 @@ data class Series(val s: String) {
 
         return ret!!.toInt()
     }
-}
