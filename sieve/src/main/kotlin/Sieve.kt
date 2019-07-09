@@ -28,6 +28,15 @@ object Sieve {
 }
 
 
+object Sieve {
+    fun primesUpTo(number: Int): List<Int> {
+        val candidates = (2..number).toList()
+        return candidates.fold(candidates, { acc, candidate -> acc.filterNot { it > candidate && it % candidate == 0} })
+    }
+}
+
+
+
 
 object Sieve {
     fun primesUpTo(max: Int): List<Int> = primes((2..max).toList())
