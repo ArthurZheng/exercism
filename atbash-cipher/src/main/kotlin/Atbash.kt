@@ -488,3 +488,22 @@ object Atbash {
         else -> ""
     }
 }
+
+
+object Atbash {
+	private val encodeMapping = ((('a'..'z').zip('z'.downTo('a'))) + ('0'..'9').zip('0'..'9')).toMap()
+	private val decodeMapping = (('z'.downTo('a')).zip('a'..'z') + ('0'..'9').zip('0'..'9')).toMap()
+
+	fun encode(input: String): String {
+		return input.filter(Char::isLetterOrDigit).toLowerCase().map{ it -> encodeMapping.getOrDefault(it, it)}.joinToString("").chunked(5).joinToString(" ")
+		return input.filter(Char::isLetterOrDigit).toLowerCase().map{ it -> encodeMapping[it]}.joinToString("").chunked(5).joinToString(" ")
+		return input.filter(Char::isLetterOrDigit).toLowerCase().map{ it -> encodeMapping.get(it) ?: it}.joinToString("").chunked(5).joinToString(" ")
+	}
+
+	fun decode(cypher: String): String {
+		return cypher.filter(Char::isLetterOrDigit).map{ decodeMapping.get(it) ?: it}.joinToString("")
+		return cypher.filter(Char::isLetterOrDigit).map{ decodeMapping.getOrDefault(it, it)}.joinToString("")
+		return cypher.filter(Char::isLetterOrDigit).map{ it -> decodeMapping[it]}.joinToString("")
+	}
+}
+
