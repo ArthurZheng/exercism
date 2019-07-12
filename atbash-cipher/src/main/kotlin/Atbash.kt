@@ -1,8 +1,15 @@
 object Atbash {
-    private val MAPPINGS = (('a'..'z').zip('z'.downTo('a')) + ('0'..'9').zip('0'..'9')).toMap()
+//    private val MAPPINGS = (('a'..'z').zip('z'.downTo('a')) + ('0'..'9').zip('0'..'9')).toMap()
+
+    private val aToZ = ('a'..'z')
+	private val aToZReversed = aToZ.reversed()
+	private val zeroToNine = ('0'..'9')
+	private val MAPPINGS = (aToZ.zip(aToZReversed) + zeroToNine.zip(zeroToNine)).toMap()
+
 
     fun encode(input: String) =
-            input.toLowerCase().replace("[^a-z0-9]".toRegex(), "")
+//            input.toLowerCase().replace("[^a-z0-9]".toRegex(), "")
+            input.toLowerCase().filter(Char::isLetterOrDigit)
                 .translate()
                 .chunked(5)
                 .joinToString(" ")
@@ -10,6 +17,26 @@ object Atbash {
     fun decode(input: String) = input.replace(" ", "").translate()
 
     private fun String.translate() = this.fold(StringBuilder()) { sb, c -> sb.append(MAPPINGS[c]) }.toString()
+}
+
+
+object Atbash {
+	private val MAPPINGS = ((('a'..'z').zip('z'.downTo('a'))) + ('0'..'9').zip('0'..'9')).toMap()
+
+//	private val aToZ = ('a'..'z')
+//	private val aToZReversed = aToZ.reversed()
+//	private val zeroToNine = ('0'..'9')
+//	private val MAPPINGS = (aToZ.zip(aToZReversed) + zeroToNine.zip(zeroToNine)).toMap()
+
+	fun encode(plainText: String): String {
+		return plainText.filter(Char::isLetterOrDigit).toLowerCase().transfrom().chunked(5).joinToString(" ")
+	}
+
+	fun decode(decypher: String): String {
+		return decypher.replace(" ", "").transfrom()
+	}
+
+	private fun String.transfrom() = this.fold(StringBuilder()) { sb, c -> sb.append(MAPPINGS[c])}.toString()
 }
 
 
@@ -29,6 +56,7 @@ object Atbash {
 
     private fun String.translate() = this.fold(StringBuilder()) { sb, c -> sb.append(MAPPINGS[c]) }.toString()
 }
+
 
 
 
@@ -37,26 +65,54 @@ object Atbash {
 object Atbash {
 
   fun encode(plain: String): String =
-    substitute(plain)
+    transfrom(plain)
       .chunked(5) { it.joinToString("") }
       .joinToString(" ")
 
   fun decode(cipher: String): String =
-    substitute(cipher)
+    transfrom(cipher)
       .joinToString("")
 
-  private fun substitute(input: String): Iterable<Char> =
+  private fun transfrom(input: String): Iterable<Char> =
     input
       .filter(Char::isLetterOrDigit)
       .map(Char::toLowerCase)
-      .map(Atbash::substitute)
+      .map(Atbash::substitute2)
 
   private val A = 'a'.toInt()
   private val Z = 'z'.toInt()
 
-  private fun substitute(c: Char): Char =
+  private fun substitute2(c: Char): Char =
     c.toInt().let { i -> if (i in (A..Z)) (Z - i + A).toChar() else c }
 }
+
+
+
+
+object Atbash {
+
+  fun encode(plain: String): String =
+    transfrom(plain)
+      .chunked(5) { it.joinToString("") }
+      .joinToString(" ")
+
+  fun decode(cipher: String): String =
+    transfrom(cipher)
+      .joinToString("")
+
+  private fun transfrom(input: String): Iterable<Char> =
+    input
+      .filter(Char::isLetterOrDigit)
+      .map(Char::toLowerCase)
+      .map(Atbash::substitute2)
+
+  private fun substitute2(c: Char): Char =
+    c.let { i -> if (i in 'a'..'z') ('z' - (i - 'a')) else c }
+}
+
+
+
+
 
 
 
@@ -81,7 +137,8 @@ object Atbash {
 
 object Atbash {
     private val encodeMapping = ('a'..'z').zip(('z' downTo 'a')).toMap()
-    private val decodeMapping = ('z' downTo 'a').zip('a'..'z').toMap()
+//    private val decodeMapping = ('z' downTo 'a').zip('a'..'z').toMap()
+    private val decodeMapping = encodeMapping.entries.associateBy({ it.value }) { it.key } // reverse a Map here, there's no built-in method to reverse a Map.
 
     fun encode(str: String): String = str.filter { it.isLetterOrDigit() }
         .toLowerCase()
@@ -101,8 +158,8 @@ object Atbash {
 object Atbash {
     fun encode(input: String): String {
         return convert(input)
-        .chunked(5)
-        .joinToString(" ")
+                .chunked(5)
+                .joinToString(" ")
     }
 
     fun decode(input: String): String {
@@ -111,9 +168,10 @@ object Atbash {
 
     private fun convert(input: String): String {
         return input.toLowerCase().replace(Regex("\\W"), "")
-        .map { if (it.isDigit()) it else 'z' - (it - 'a') }
-        .joinToString("")
+                .map { if (it.isDigit()) it else 'z' - (it - 'a') }
+                .joinToString("")
     }
+
 }
 
 
@@ -134,7 +192,6 @@ object Atbash {
     fun encode(input: String) = input.cypher().chunked(5).joinToString(" ")
     fun decode(input: String) = input.cypher()
 }
-
 
 
 
@@ -351,7 +408,15 @@ val digits = ('0'..'9')
 val pairs3 = (alphabets.zip(alphabets.reversed()) + digits.zip(digits)).toMap()
 
 
+  val pairs = ('a'..'z').let { it.zip(it.reversed()) } +
+      ('0'..'9').let { it.zip(it) }
+
+
 chunked(5) has the same impact as windowed(5, 5, true)
+fun substitute(c: Char) = if (c.isLetter()) 'z' - (c - 'a') else c
+
+.map {cipher[it] ?: it}
+.map { cipher.getOrDefault(it, it)}
 
 
 
@@ -363,30 +428,63 @@ chunked(5) has the same impact as windowed(5, 5, true)
 
 
 
+object Atbash {
+    val alphabets = ('a'..'z')
+    val reversedAlphabets = alphabets.reversed()
+    val numbers = ('0'..'9') OR val numbers = (0..9).joinToString("")
+
+    val encodeMap = (alphabets.zip(reversedAlphabets) + numbers.zip(numbers)).toMap()
+    val decodeMap = (reversedAlphabets.zip(alphabets) + numbers.zip(numbers)).toMap()
+
+    fun encode(input: String): String {
+        return input.filter(Character::isLetterOrDigit).toLowerCase().map{ encodeMap.getOrDefault(it, it)}.joinToString("").chunked(5).joinToString(" ")
+    }
+
+    fun decode(input: String): String {
+        return input.replace(" ", "").map{ decodeMap.getOrDefault(it, it)}.joinToString("")
+    }
+}
 
 
+object Atbash {
+    val alphabets = ('a'..'z')
+    val reversedAlphabets = alphabets.reversed()
+    val numbers = ('0'..'9')
+    val zippedNumbers = numbers.zip(numbers)
+
+    val encodeMap = (alphabets.zip(reversedAlphabets) + zippedNumbers).toMap()
+    val decodeMap = (reversedAlphabets.zip(alphabets) + zippedNumbers).toMap()
+
+    fun encode(input: String): String {
+        return input.filter(Character::isLetterOrDigit).toLowerCase().map{ encodeMap.getOrDefault(it, it)}.joinToString("").chunked(5).joinToString(" ")
+    }
+
+    fun decode(input: String): String {
+        return input.replace(" ", "").map{ decodeMap.getOrDefault(it, it)}.joinToString("")
+    }
+}
 
 
+object Atbash {
+    val alphabets = ('a'..'z')
+    val reversedAlphabets = alphabets.reversed()
+    val numbers = ('0'..'9')
+    val zippedNumbers = numbers.zip(numbers)
 
+    val encodeMap = (alphabets.zip(reversedAlphabets) + zippedNumbers).toMap()
+    val decodeMap = (reversedAlphabets.zip(alphabets) + zippedNumbers).toMap()
 
+    fun encode(plainText: String): String {
+        return plainText.filter(Char::isLetterOrDigit).toLowerCase().map(this::transform).joinToString("").chunked(5).joinToString(" ")
+    }
 
+    fun decode(cypher: String): String {
+        return cypher.replace(" ", "").map(::transform).joinToString("")
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    private fun transform(character: Char) = when{
+        character.isLetter() -> 'z' - (character - 'a')
+        character.isDigit() -> character
+        else -> ""
+    }
+}
