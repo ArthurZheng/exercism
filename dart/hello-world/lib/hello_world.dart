@@ -1,5 +1,3 @@
 class HelloWorld {
-  String hello() {
-    // Put your code here
-  }
+  String hello() => "Hello, World!";
 }

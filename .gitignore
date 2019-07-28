@@ -14,3 +14,8 @@
 gradle/*
 gradle*
 ../.gradel*
+
+
+dart/**/.dart_tool
+dart/**/.packages
+dart/**/pubspec.lock
