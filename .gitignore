@@ -19,3 +19,8 @@ gradle*
 dart/**/.dart_tool
 dart/**/.packages
 dart/**/pubspec.lock
+dart/**/.exercism
+dart/**/README.md
+dart/**/analysis_options.yaml
+dart/**/pubspec.yaml
+dart/**/test/*
