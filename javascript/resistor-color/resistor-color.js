@@ -127,3 +127,30 @@ export const colorCode = (str) => (COLORS.indexOf(
       // Eighth way of doing it
       export const COLORS = ["black", "brown", "red", "orange", "yellow", "green", "blue", "violet", "grey", "white"]
       export const colorCode = (str) => (COLORS.indexOf(str) !== -1) ? COLORS.indexOf(str) : false
+
+
+
+
+
+
+      // Jun's final way of doing it
+      const colourMap = {
+        black: 0,
+        brown: 1,
+        red: 2,
+        orange: 3,
+        yellow: 4,
+        green: 5,
+        blue: 6,
+        violet: 7,
+        grey: 8,
+        white: 9
+      }
+
+      const COLORS = Object.keys(colourMap)
+      const colorCode = (code) => colourMap[code]
+
+      module.exports = {
+        colorCode,
+        COLORS
+      }
