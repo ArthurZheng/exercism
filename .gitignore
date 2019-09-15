@@ -24,3 +24,17 @@ dart/**/README.md
 dart/**/analysis_options.yaml
 dart/**/pubspec.yaml
 dart/**/test/*
+
+javascript/**/node_modules/*
+javascript/**/README*
+javascript/**/package*
+javascript/**/.eslint*
+javascript/**/.exercism*
+javascript/**/babel*
+javascript/**/*.spec.js
+
+
+
+
+
+.vscode/*
