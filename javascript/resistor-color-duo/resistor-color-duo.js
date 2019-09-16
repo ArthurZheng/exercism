@@ -11,11 +11,12 @@ const colourMap = {
   white: 9
 }
 
-const getCodeValue = (code) => colourMap[code]
+const getCodeValue = (code) => colourMap[code];
 
 export const value = (inputColours) => {
-  const result = inputColours.map((code) => colourMap[code]).join('')
-  return parseInt(result);
+  const result = inputColours.map((code) => colourMap[code]).join('');
+  // return parseInt(result);
+  return Number(result);
 };
 
 
@@ -187,10 +188,10 @@ const colorMap = {
 
 const getColorValue = colors => colorNames =>
   colorNames.map((colorName) =>
-    colors[colorName.toLowerCase()]).join('')
+    colors[colorName.toLowerCase()]).join('');
 
 
-export const value = (colorNames) => Number(getColorValue(colorMap)(colorNames)
+export const value = (colorNames) => Number(getColorValue(colorMap)(colorNames);
 
 
 
