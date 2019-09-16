@@ -206,3 +206,78 @@ export const value = (colorNames) => Number(getColorValue(colorMap)(colorNames);
           return acc * 10 + index;
         }, 0);
     };
+
+
+
+
+
+    // using module.exports;
+    // const value = () => 10;
+    // module.exports.value = value;
+
+    // export the function directly;
+    //export const value = () => 10;
+
+    // use currying
+    const colourMap = {
+      black: 0,
+      brown: 1,
+      red: 2,
+      orange: 3,
+      yellow: 4,
+      green: 5,
+      blue: 6,
+      violet: 7,
+      grey: 8,
+      white: 9,
+    };
+
+    const getColourValue = (colourMaps) => (colourNames) => colourNames.map((colourName) => colourMaps[colourName]).reduce((acc, colourValue) => (acc * 10) + colourValue);
+    export const value = (colourNames) => getColourValue(colourMap)(colourNames);
+
+
+
+    // use reduce
+    const colourMap = {
+      black: 0,
+      brown: 1,
+      red: 2,
+      orange: 3,
+      yellow: 4,
+      green: 5,
+      blue: 6,
+      violet: 7,
+      grey: 8,
+      white: 9,
+    };
+
+    export const value = (colourNames) => {
+      const result = colourNames.reduce((acc, colour) => acc + colourMap[colour], '')
+      return Number(result);
+    };
+
+
+
+
+    // use map and reduce
+    const colourMap = {
+      black: 0,
+      brown: 1,
+      red: 2,
+      orange: 3,
+      yellow: 4,
+      green: 5,
+      blue: 6,
+      violet: 7,
+      grey: 8,
+      white: 9,
+    };
+
+    export const value = (colourNames) => colourNames.map((colour) => colourMap[colour]).reduce((acc, colourValue) => (acc * 10) + colourValue, '');
+
+
+
+    // use indexOf()
+    const COLOURS = ['black', 'brown', 'red', 'orange', 'yellow', 'green', 'blue', 'violet', 'grey', 'white'];
+
+    export const value = (colourNames) => colourNames.map(colour => COLOURS.indexOf(colour)).reduce((acc, colourValue) => (acc * 10) + colourValue);
