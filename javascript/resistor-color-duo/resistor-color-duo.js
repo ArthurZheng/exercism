@@ -6,7 +6,7 @@ const colourMap = {
   yellow: 4,
   green: 5,
   blue: 6,
-  violet: 7,
+  violet: 7,w
   grey: 8,
   white: 9
 }
